@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TextDemo.iml" filepath="$PROJECT_DIR$/TextDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/freefont/freefont.iml" filepath="$PROJECT_DIR$/freefont/freefont.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/FreeText.iml" filepath="$PROJECT_DIR$/.idea/FreeText.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FreeText.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FreeText.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.iml" filepath="$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.iml" />
     </modules>
   </component>
 </project>

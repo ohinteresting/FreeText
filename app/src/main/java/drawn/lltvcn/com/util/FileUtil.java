@@ -89,7 +89,7 @@ public class FileUtil {
     }
 
     public static String getDataDir(){
-        return getRootPath()+DATA_PATH;
+        return getRootPath()+File.separator+DATA_PATH;
     }
 
     public static String getImgDir(){
@@ -124,58 +124,70 @@ public class FileUtil {
     }
 
     public static String getRootPath(String name, boolean hasMedia, boolean forceNoSDCard) {
-        String path = null;
-        if (!forceNoSDCard && checkSDCard()) {
-            path = Environment.getExternalStorageDirectory().toString()
-                    + File.separator
-                    + name
-                    + File.separator;
-
-        } else {
-
-            File dataDir = MainApplication.getInstance().getFilesDir();
-            if (dataDir != null) {
-                path = dataDir + File.separator
-                        + name
-                        + File.separator;
-                File file = new File(path);
-                if (!file.exists()) {
-                    file.mkdirs();
-                    file.setExecutable(true, false);
-                    file.setReadable(true, false);
-                    file.setWritable(true, false);
-                }
-            } else {
-                path = Environment.getDataDirectory().toString() + File.separator
-                        + name
-                        + File.separator;
-            }
-
-
-        }
-
-        File file = new File(path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-
-        if (!file.exists()) { //解决一部分手机将eMMC存储挂载到 /mnt/external_sd 、/mnt/sdcard2 等节点
-            String tmpPath = createRootDirInDevMount();
-            if (tmpPath != null) {
-                path = tmpPath + File.separator + name
-                        + File.separator;
-            }
-
-            file = new File(path);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-
-        }
-//		if(!hasMedia)
-//		createNoMediaFile(path);
-
-        return path;
+//        String path = null;
+//        if (!forceNoSDCard && checkSDCard()) {
+//            path = Environment.getExternalStorageDirectory().toString()
+//                    + File.separator
+//                    + name
+//                    + File.separator;
+//
+//        } else {
+//
+//            File dataDir = MainApplication.getInstance().getFilesDir();
+//            if (dataDir != null) {
+//                path = dataDir + File.separator
+//                        + name
+//                        + File.separator;
+//                File file = new File(path);
+//                if (!file.exists()) {
+//                    file.mkdirs();
+//                    file.setExecutable(true, false);
+//                    file.setReadable(true, false);
+//                    file.setWritable(true, false);
+//                }
+//            } else {
+//                path = Environment.getDataDirectory().toString() + File.separator
+//                        + name
+//                        + File.separator;
+//            }
+//        }
+//
+//
+//        File file = new File(path);
+//        if (!file.exists()) {
+//            file.mkdirs();
+//        }
+//
+////        if (!file.exists()) { //解决一部分手机将eMMC存储挂载到 /mnt/external_sd 、/mnt/sdcard2 等节点
+////            String tmpPath = createRootDirInDevMount();
+////            if (tmpPath != null) {
+////                path = tmpPath + File.separator + name
+////                        + File.separator;
+////            }
+////
+////            file = new File(path);
+////            if (!file.exists()) {
+////                file.mkdirs();
+////            }
+////
+////        }
+////		if(!hasMedia)
+////		createNoMediaFile(path);
+//        return path;
+        File dataDir = MainApplication.getInstance().getExternalFilesDir(name);
+//        if (dataDir != null) {
+//            path = dataDir + File.separator
+//                    + name
+//                    + File.separator;
+//            File file = new File(path);
+//            if (!file.exists()) {
+//                file.mkdirs();
+//                file.setExecutable(true, false);
+//                file.setReadable(true, false);
+//                file.setWritable(true, false);
+//            }
+//        }
+        return dataDir.getAbsolutePath();
     }
 
     public static boolean deleteFile(String filepath) {

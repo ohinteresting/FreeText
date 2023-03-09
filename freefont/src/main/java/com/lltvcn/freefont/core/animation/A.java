@@ -159,7 +159,6 @@ public class A {
         upIn.addAnimation(alphaIn);
         upIn.addAnimation(translateIn);
 
-
         AnimationSet scaleRightLarge = new AnimationSet(false);
         Animation scaleIn = new ScaleAnimation(1,1.5f,1,1.5f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
         scaleIn.setDuration(scaleDuration);
@@ -180,8 +179,6 @@ public class A {
         scaleLeftLarge.addAnimation(scaleIn);
         scaleLeftLarge.addAnimation(rotateRightIn);
 
-
-
         AnimationSet upOut = new AnimationSet(false);
         Animation alphaOut = new AlphaAnimation(1,0);
         alphaOut.setDuration(upDuration);
@@ -199,8 +196,6 @@ public class A {
 
         queen.setRepeatMode(Animation.RESTART);
         queen.setRepeatCount(Animation.INFINITE);
-
-
 
         return new Animation2IA(queen);
     }

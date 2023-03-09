@@ -1,6 +1,5 @@
 package drawn.lltvcn.com.textdemo;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,8 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.lltvcn.freefont.core.animation.A;
-import com.lltvcn.freefont.core.data.AniData;
 import com.lltvcn.freefont.core.data.DrawData;
 import com.lltvcn.freefont.core.view.STextView;
 
@@ -20,13 +20,12 @@ import java.util.ArrayList;
 
 import drawn.lltvcn.com.util.FileUtil;
 import drawn.lltvcn.com.util.FontUtil;
-import drawn.lltvcn.com.util.SUtil;
 
 /**
  * Created by zhaolei on 2018/1/5.
  */
 
-public class DemoActivity extends Activity{
+public class DemoActivity extends AppCompatActivity {
 
     private ListView listView;
 
@@ -42,34 +41,44 @@ public class DemoActivity extends Activity{
         d1.title = "组合动画";
         d1.data = FileUtil.getDrawData("文字颜色顺序变化");
         d1.font = "15华康海报体.ttf";
-        d1.data.aniType = A.BOTTOM_IN_SCALE_UP_OUT;
+        if (d1.data != null) {
+            d1.data.aniType = A.BOTTOM_IN_SCALE_UP_OUT;
+        }
         datas.add(d1);
 
         d1 = new Data();
         d1.title = "淡入淡出动画";
         d1.data = FileUtil.getDrawData("文字颜色顺序变化");
         d1.font = "15华康海报体.ttf";
-        d1.data.aniType = A.SINGLE_RIGHT_FADE_INF_LEFT_FADE_OUT;
+        if (d1.data != null) {
+            d1.data.aniType = A.SINGLE_RIGHT_FADE_INF_LEFT_FADE_OUT;
+        }
         datas.add(d1);
 
         d1 = new Data();
         d1.title = "单字旋转动画";
         d1.data = FileUtil.getDrawData("文字颜色顺序变化");
-        d1.data.aniType = A.SINGLE_ROTATE;
+        if (d1.data != null) {
+            d1.data.aniType = A.SINGLE_ROTATE;
+        }
         d1.font = "15华康海报体.ttf";
         datas.add(d1);
 
         d1 = new Data();
         d1.title = "整体旋转动画";
         d1.data = FileUtil.getDrawData("文字颜色顺序变化");
-        d1.data.aniType = A.ROTATE_REPEAT;
+        if (d1.data != null) {
+            d1.data.aniType = A.ROTATE_REPEAT;
+        }
         d1.font = "15华康海报体.ttf";
         datas.add(d1);
 
         d1 = new Data();
         d1.title = "上下移动动画";
         d1.data = FileUtil.getDrawData("文字颜色顺序变化");
-        d1.data.aniType = A.SINGLE_UP_DOWN;
+        if (d1.data != null) {
+            d1.data.aniType = A.SINGLE_UP_DOWN;
+        }
         d1.font = "15华康海报体.ttf";
         datas.add(d1);
 
@@ -125,7 +134,6 @@ public class DemoActivity extends Activity{
 
         listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(new MyAdapter());
-
     }
 
 

@@ -1,14 +1,11 @@
 package com.lltvcn.freefont.core.animation;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.AnimationSet;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
@@ -22,13 +19,14 @@ public class TAnimationQueen extends BaseAnimation{
     private ArrayList<BaseAnimation> animations = new ArrayList<>();
     private Field fRunning;
 
+    @SuppressLint("SoonBlockedPrivateApi")
     public TAnimationQueen(TextView tv) {
         super(tv);
-        try {
-            fRunning =  ValueAnimator.class.getDeclaredField("mRunning");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            fRunning = ValueAnimator.class.getDeclaredField("mRunning");
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void addAnimation(BaseAnimation animation){
@@ -54,15 +52,19 @@ public class TAnimationQueen extends BaseAnimation{
     public void start() {
         checkDuration();
         super.start();
-        fRunning.setAccessible(true);
-        for (BaseAnimation animation:animations) {
-            try {
-                fRunning.setBoolean(animation,true);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        fRunning.setAccessible(false);
+//        if (fRunning == null) {
+//            Log.e("TAnimationQueen", "start fRunning is null");
+//            return;
+//        }
+//        try {
+//            fRunning.setAccessible(true);
+//            for (BaseAnimation animation:animations) {
+//                fRunning.setBoolean(animation,true);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        fRunning.setAccessible(false);
     }
 
     private void checkDuration(){
@@ -84,15 +86,19 @@ public class TAnimationQueen extends BaseAnimation{
     @Override
     public void end() {
         super.end();
-        for (BaseAnimation animation:animations) {
-            fRunning.setAccessible(true);
-            try {
-                fRunning.setBoolean(animation,false);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            fRunning.setAccessible(false);
-        }
+//        if (fRunning == null) {
+//            Log.e("TAnimationQueen", "end fRunning is null");
+//            return;
+//        }
+//        for (BaseAnimation animation:animations) {
+//            fRunning.setAccessible(true);
+//            try {
+//                fRunning.setBoolean(animation,false);
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//            fRunning.setAccessible(false);
+//        }
     }
 
 

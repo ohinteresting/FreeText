@@ -30,7 +30,6 @@ public class MainApplication extends Application{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }
