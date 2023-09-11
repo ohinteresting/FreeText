@@ -15,6 +15,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
@@ -27,10 +29,14 @@ import java.util.Map;
 
 import com.lltvcn.freefont.core.view.STextView;
 import com.lltvcn.freefont.core.layer.FontStyle;
+
 import drawn.lltvcn.com.textdemo.data.BgData;
+
 import com.lltvcn.freefont.core.data.DrawData;
+
 import drawn.lltvcn.com.textdemo.data.FontData;
 import drawn.lltvcn.com.textdemo.data.FontStyleData;
+
 import com.lltvcn.freefont.core.data.IShaderData;
 import com.lltvcn.freefont.core.data.LayerData;
 import com.lltvcn.freefont.core.data.LineData;
@@ -38,6 +44,7 @@ import com.lltvcn.freefont.core.data.ShadeRadiusParam;
 import com.lltvcn.freefont.core.data.ShaderBitmapParam;
 import com.lltvcn.freefont.core.data.ShaderLinearParam;
 import com.lltvcn.freefont.core.data.ShaderSweepParam;
+
 import drawn.lltvcn.com.textdemo.controller.AddLayerViewController;
 import drawn.lltvcn.com.textdemo.controller.EditParamViewController;
 import drawn.lltvcn.com.textdemo.controller.EditTxtController;
@@ -50,10 +57,10 @@ import drawn.lltvcn.com.util.ZipUtil;
  * Created by zhaolei on 2017/10/13.
  */
 
-public class EditActivity extends Activity{
+public class EditActivity extends Activity {
 
     private STextView shadeTextView;
-    private CheckBox ckSLine,ckSBm,ckSRadius,ckSSweep;
+    private CheckBox ckSLine, ckSBm, ckSRadius, ckSSweep;
     private EditTxtController editTxtController;
     private AddLayerViewController addLayerController;
     private EditParamViewController editParamViewController;
@@ -66,7 +73,7 @@ public class EditActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_general_layer);
+        DataBindingUtil.setContentView(this, R.layout.layout_general_layer);
         shadeTextView = (STextView) findViewById(R.id.tv);
         btnComLayer = findViewById(R.id.btn_comp_layer);
         shadeTextView.setLocalSourcePath(FileUtil.getImgDir());
@@ -89,7 +96,7 @@ public class EditActivity extends Activity{
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                addLayerController.show(drawData.layers.get(position),layerAdd);
+                addLayerController.show(drawData.layers.get(position), layerAdd);
             }
         });
 
@@ -97,15 +104,15 @@ public class EditActivity extends Activity{
         addLayerController.init((ViewGroup) findViewById(R.id.fl_cotainer));
 
         selectController = new SelectController();
-        selectController.init((ViewGroup) findViewById(R.id.fl_cotainer),new EditParamViewController.VisiableListener() {
+        selectController.init((ViewGroup) findViewById(R.id.fl_cotainer), new EditParamViewController.VisiableListener() {
             @Override
             public void onVisable(boolean visiable) {
-                if(!addLayerController.isShowing()){
+                if (!addLayerController.isShowing()) {
                     return;
                 }
-                if(visiable){
+                if (visiable) {
                     addLayerController.dismiss();
-                }else{
+                } else {
                     addLayerController.show();
                 }
             }
@@ -115,12 +122,12 @@ public class EditActivity extends Activity{
         editParamViewController.init((ViewGroup) findViewById(R.id.fl_cotainer), new EditParamViewController.VisiableListener() {
             @Override
             public void onVisable(boolean visiable) {
-                if(!addLayerController.isShowing()){
+                if (!addLayerController.isShowing()) {
                     return;
                 }
-                if(visiable){
+                if (visiable) {
                     addLayerController.dismiss();
-                }else{
+                } else {
                     addLayerController.show();
                 }
             }
@@ -131,10 +138,10 @@ public class EditActivity extends Activity{
         fontNames = FontUtil.getFontNames();
     }
 
-    public void clickTxt(View view){
+    public void clickTxt(View view) {
         final TextView tv = (TextView) view;
         EditTxtController.OnConfirmListener listener = null;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv:
                 listener = new EditTxtController.OnConfirmListener() {
                     @Override
@@ -147,7 +154,7 @@ public class EditActivity extends Activity{
                 listener = new EditTxtController.OnConfirmListener() {
                     @Override
                     public void onConfirm(String content) {
-                        if(!TextUtils.isEmpty(content)){
+                        if (!TextUtils.isEmpty(content)) {
                             tv.setText(content);
                             shadeTextView.setTextSize(Float.parseFloat(content));
 //                            notifyDataChange();
@@ -159,18 +166,18 @@ public class EditActivity extends Activity{
                 listener = new EditTxtController.OnConfirmListener() {
                     @Override
                     public void onConfirm(String content) {
-                        try{
+                        try {
                             tv.setText(content);
-                            if(!TextUtils.isEmpty(content)){
-                                int color = Color.parseColor("#"+content);
+                            if (!TextUtils.isEmpty(content)) {
+                                int color = Color.parseColor("#" + content);
                                 shadeTextView.setTextColor(color);
-                            }else {
+                            } else {
                                 shadeTextView.setTextColor(Color.BLACK);
                             }
                             notifyDataChange();
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(EditActivity.this,"颜色格式错误",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditActivity.this, "颜色格式错误", Toast.LENGTH_SHORT).show();
                         }
                     }
                 };
@@ -179,15 +186,15 @@ public class EditActivity extends Activity{
                 listener = new EditTxtController.OnConfirmListener() {
                     @Override
                     public void onConfirm(String content) {
-                        try{
+                        try {
                             tv.setText(content);
-                            if(TextUtils.isEmpty(content)){
+                            if (TextUtils.isEmpty(content)) {
                                 drawData.width = null;
-                            }else {
+                            } else {
                                 drawData.width = Float.valueOf(content);
                             }
                             notifyDataChange();
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -197,15 +204,15 @@ public class EditActivity extends Activity{
                 listener = new EditTxtController.OnConfirmListener() {
                     @Override
                     public void onConfirm(String content) {
-                        try{
+                        try {
                             tv.setText(content);
-                            if(TextUtils.isEmpty(content)){
+                            if (TextUtils.isEmpty(content)) {
                                 drawData.height = null;
-                            }else {
+                            } else {
                                 drawData.height = Float.valueOf(content);
                             }
                             notifyDataChange();
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -215,11 +222,11 @@ public class EditActivity extends Activity{
                 selectController.show(fontNames, false, new SelectController.ResultListener() {
                     @Override
                     public void onConfrim(ArrayList<String> result) {
-                        if(result!=null&&result.size()>0){
+                        if (result != null && result.size() > 0) {
                             tv.setText(result.get(0));
                             shadeTextView.setTypeface(FontUtil.getTypeface(result.get(0)));
 //                            drawData.fontStyle =  result.get(0);
-                        }else{
+                        } else {
                             tv.setText(null);
 //                            drawData.fontStyle =  null;
                             shadeTextView.setTypeface(null);
@@ -233,11 +240,11 @@ public class EditActivity extends Activity{
                 editParamViewController.setData(fd).setCallBack(new EditParamViewController.Call<FontStyleData>() {
                     @Override
                     public void onConfirm(FontStyleData data) {
-                        if(data.fontStyle!=null){
+                        if (data.fontStyle != null) {
                             tv.setText(data.fontStyle.name());
                             drawData.fontStyle = data.fontStyle.name();
                             notifyDataChange();
-                        }else{
+                        } else {
                             tv.setText(FontStyle.Normal.name());
                             drawData.fontStyle = FontStyle.Normal.name();
                             notifyDataChange();
@@ -254,7 +261,7 @@ public class EditActivity extends Activity{
                     public void onConfirm(BgData data) {
                         drawData.bgColor = data.bgColor;
                         drawData.bgImg = data.bitmap;
-                        String str = data.bitmap==null?("颜色："+data.bgColor):(data.bitmap+"--过滤颜色："+data.bgColor);
+                        String str = data.bitmap == null ? ("颜色：" + data.bgColor) : (data.bitmap + "--过滤颜色：" + data.bgColor);
                         tv.setText(str);
                         notifyDataChange();
 
@@ -265,15 +272,15 @@ public class EditActivity extends Activity{
                 listener = addLayerController.onClickTxt(tv);
                 break;
         }
-        if(listener!=null)
+        if (listener != null)
             editTxtController.show(listener);
     }
 
-    public void onCK(View view){
+    public void onCK(View view) {
         Object data = null;
         EditParamViewController.Call call = null;
         IShaderData shaderData = null;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ck_shader_main_bm:
                 shaderData = new ShaderBitmapParam();
                 break;
@@ -288,15 +295,15 @@ public class EditActivity extends Activity{
                 break;
             default:
                 AddLayerViewController.DataHolder holder = addLayerController.onCK((CheckBox) view);
-                if(holder!=null){
+                if (holder != null) {
                     data = holder.getData();
                     call = holder;
                 }
         }
-        if(call!=null&&data!=null){
+        if (call != null && data != null) {
             editParamViewController.setData(data).setCallBack(call).show();
-        }else if(shaderData!=null){
-            if(!((CheckBox)view).isChecked()){
+        } else if (shaderData != null) {
+            if (!((CheckBox) view).isChecked()) {
                 drawData.shaderParam = null;
                 notifyDataChange();
                 return;
@@ -310,19 +317,19 @@ public class EditActivity extends Activity{
                 @Override
                 public void onConfirm(IShaderData data) {
                     drawData.shaderParam = data.toShaderParam();
-                    if(drawData.shaderParam.radiusParam!=null){
+                    if (drawData.shaderParam.radiusParam != null) {
                         ckSRadius.setChecked(true);
-                    }else if(drawData.shaderParam.sweepParam!=null){
+                    } else if (drawData.shaderParam.sweepParam != null) {
                         ckSSweep.setChecked(true);
-                    }else if(drawData.shaderParam.linearParam!=null){
+                    } else if (drawData.shaderParam.linearParam != null) {
                         ckSLine.setChecked(true);
-                    }else if(drawData.shaderParam.bitmapParam!=null){
+                    } else if (drawData.shaderParam.bitmapParam != null) {
                         ckSBm.setChecked(true);
                     }
                     notifyDataChange();
                 }
             }).show();
-        }else {
+        } else {
             notifyDataChange();
         }
     }
@@ -332,69 +339,69 @@ public class EditActivity extends Activity{
         @Override
         public void onAdd(LayerData data) {
             drawData.layers.add(data);
-            if(TextUtils.isEmpty(data.name)){
-                switch (data.type){
+            if (TextUtils.isEmpty(data.name)) {
+                switch (data.type) {
                     case LayerData.TYPE_IMG:
-                        data.name = drawData.layers.size()+"层-图";
+                        data.name = drawData.layers.size() + "层-图";
                         break;
                     case LayerData.TYPE_TXT:
-                        data.name = drawData.layers.size()+"层-文";
+                        data.name = drawData.layers.size() + "层-文";
                         break;
                     case LayerData.TYPE_MULTI:
-                        data.name = drawData.layers.size()+"层-多";
+                        data.name = drawData.layers.size() + "层-多";
                         break;
                 }
             }
-            if(drawData.layers.size()>1){
+            if (drawData.layers.size() > 1) {
                 btnComLayer.setEnabled(true);
-            }else{
+            } else {
                 btnComLayer.setEnabled(false);
             }
             notifyDataChange();
-            ((MyAdapter)gv.getAdapter()).notifyDataSetChanged();
+            ((MyAdapter) gv.getAdapter()).notifyDataSetChanged();
         }
 
         @Override
         public void onCalcel() {
             notifyDataChange();
-            ((MyAdapter)gv.getAdapter()).notifyDataSetChanged();
+            ((MyAdapter) gv.getAdapter()).notifyDataSetChanged();
         }
 
         @Override
         public void onDelete(LayerData data) {
             drawData.layers.remove(data);
-            if(drawData.layers.size()>1){
+            if (drawData.layers.size() > 1) {
                 btnComLayer.setEnabled(true);
-            }else{
+            } else {
                 btnComLayer.setEnabled(false);
             }
             notifyDataChange();
-            ((MyAdapter)gv.getAdapter()).notifyDataSetChanged();
+            ((MyAdapter) gv.getAdapter()).notifyDataSetChanged();
         }
 
         @Override
         public void onSeparate(LayerData data) {
             drawData.layers.remove(data);
-            if(data.layerDatas!=null&&data.layerDatas.size()>0){
+            if (data.layerDatas != null && data.layerDatas.size() > 0) {
                 drawData.layers.addAll(data.layerDatas);
             }
-            if(drawData.layers.size()>1){
+            if (drawData.layers.size() > 1) {
                 btnComLayer.setEnabled(true);
-            }else{
+            } else {
                 btnComLayer.setEnabled(false);
             }
             notifyDataChange();
-            ((MyAdapter)gv.getAdapter()).notifyDataSetChanged();
+            ((MyAdapter) gv.getAdapter()).notifyDataSetChanged();
         }
     };
 
-    private void notifyDataChange(){
+    private void notifyDataChange() {
         shadeTextView.setData(drawData);
 //        setData(drawData,shadeTextView,shadeTextView.getText().toString());
     }
 
-    public void clickBtn(View v){
-        switch (v.getId()){
+    public void clickBtn(View v) {
+        switch (v.getId()) {
             case R.id.btn_add_img_layer:
                 addLayerController.showAddImg(layerAdd);
                 break;
@@ -402,7 +409,7 @@ public class EditActivity extends Activity{
                 addLayerController.showAddTxt(layerAdd);
                 break;
             case R.id.btn_comp_layer:
-                if(drawData.layers!=null&&drawData.layers.size()>0){
+                if (drawData.layers != null && drawData.layers.size() > 0) {
                     String[] layerNames = new String[drawData.layers.size()];
                     for (int i = 0; i < layerNames.length; i++) {
                         layerNames[i] = drawData.layers.get(i).name;
@@ -410,14 +417,14 @@ public class EditActivity extends Activity{
                     selectController.show(layerNames, true, new SelectController.ResultListener() {
                         @Override
                         public void onConfrim(ArrayList<String> result) {
-                            if(result!=null&&result.size()>0){
+                            if (result != null && result.size() > 0) {
                                 LayerData layerData = new LayerData();
                                 layerData.type = LayerData.TYPE_MULTI;
                                 layerData.layerDatas = new ArrayList<LayerData>();
                                 Iterator<LayerData> i = drawData.layers.iterator();
-                                while (i.hasNext()){
+                                while (i.hasNext()) {
                                     LayerData data = i.next();
-                                    if(result.contains(data.name)){
+                                    if (result.contains(data.name)) {
                                         i.remove();
                                         layerData.layerDatas.add(data);
                                     }
@@ -440,29 +447,29 @@ public class EditActivity extends Activity{
                         dir.deleteOnExit();
                         try {
                             dir.mkdirs();
-                            FileWriter writer = new FileWriter(dir.getAbsolutePath()+File.separator+content+".txt",false);
+                            FileWriter writer = new FileWriter(dir.getAbsolutePath() + File.separator + content + ".txt", false);
                             writer.write(json);
                             writer.flush();
                             writer.close();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if(fontData.dependImgs!=null&&fontData.dependImgs.size()>0){
-                            File imgDir = new File(dir.getAbsolutePath()+File.separator+"res");
+                        if (fontData.dependImgs != null && fontData.dependImgs.size() > 0) {
+                            File imgDir = new File(dir.getAbsolutePath() + File.separator + "res");
                             imgDir.mkdir();
-                            for (Map.Entry<String,String> entry: fontData.dependImgs.entrySet()) {
-                                FileUtil.copyFile(new File(entry.getValue()),new File(imgDir.getAbsolutePath()+File.separator+entry.getKey()));
+                            for (Map.Entry<String, String> entry : fontData.dependImgs.entrySet()) {
+                                FileUtil.copyFile(new File(entry.getValue()), new File(imgDir.getAbsolutePath() + File.separator + entry.getKey()));
                             }
-                            ZipUtil.compress(imgDir.getAbsolutePath(),dir.getAbsolutePath(),content);
+                            ZipUtil.compress(imgDir.getAbsolutePath(), dir.getAbsolutePath(), content);
                             FileUtil.deleteDir(imgDir);
                         }
-                        Toast.makeText(EditActivity.this,"已保存",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditActivity.this, "已保存", Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 break;
             case R.id.btn_add_fore_img:
-                if(drawData.foreLayers==null){
+                if (drawData.foreLayers == null) {
                     drawData.foreLayers = new ArrayList<>();
                 }
                 editParamViewController.setData(new LineData()).setCallBack(new EditParamViewController.Call<LineData>() {
@@ -475,7 +482,7 @@ public class EditActivity extends Activity{
                 }).show();
                 break;
             case R.id.btn_add_bg_img:
-                if(drawData.backLayers==null){
+                if (drawData.backLayers == null) {
                     drawData.backLayers = new ArrayList<>();
                 }
                 editParamViewController.setData(new LineData()).setCallBack(new EditParamViewController.Call<LineData>() {
@@ -498,37 +505,37 @@ public class EditActivity extends Activity{
 //            data.dependFonts = new HashMap<>();
 //            data.dependFonts.put(drawData.font,FileUtil.getFontPath(drawData.font));
 //        }
-        if(!TextUtils.isEmpty(drawData.bgImg)){
-            data.dependImgs.put(drawData.bgImg,FileUtil.getImagePathByName(drawData.bgImg));
+        if (!TextUtils.isEmpty(drawData.bgImg)) {
+            data.dependImgs.put(drawData.bgImg, FileUtil.getImagePathByName(drawData.bgImg));
         }
-        if(drawData.foreLayers!=null){
-            for (LineData fl:drawData.foreLayers) {
-                if(!TextUtils.isEmpty(fl.bitmap)){
-                    data.dependImgs.put(fl.bitmap,FileUtil.getImagePathByName(fl.bitmap));
+        if (drawData.foreLayers != null) {
+            for (LineData fl : drawData.foreLayers) {
+                if (!TextUtils.isEmpty(fl.bitmap)) {
+                    data.dependImgs.put(fl.bitmap, FileUtil.getImagePathByName(fl.bitmap));
                 }
             }
         }
-        if(drawData.backLayers!=null){
-            for (LineData fl:drawData.backLayers) {
-                if(!TextUtils.isEmpty(fl.bitmap)){
-                    data.dependImgs.put(fl.bitmap,FileUtil.getImagePathByName(fl.bitmap));
+        if (drawData.backLayers != null) {
+            for (LineData fl : drawData.backLayers) {
+                if (!TextUtils.isEmpty(fl.bitmap)) {
+                    data.dependImgs.put(fl.bitmap, FileUtil.getImagePathByName(fl.bitmap));
                 }
             }
         }
-        if(drawData.shaderParam!=null&&drawData.shaderParam.bitmapParam!=null){
-            data.dependImgs.put(drawData.shaderParam.bitmapParam.img,FileUtil.getImagePathByName(drawData.shaderParam.bitmapParam.img));
+        if (drawData.shaderParam != null && drawData.shaderParam.bitmapParam != null) {
+            data.dependImgs.put(drawData.shaderParam.bitmapParam.img, FileUtil.getImagePathByName(drawData.shaderParam.bitmapParam.img));
         }
-        if(drawData.layers!=null){
-            for (LayerData layer:
-                 drawData.layers) {
-                if(layer.imgs !=null&& layer.imgs.datas!=null){
+        if (drawData.layers != null) {
+            for (LayerData layer :
+                    drawData.layers) {
+                if (layer.imgs != null && layer.imgs.datas != null) {
                     for (int i = 0; i < layer.imgs.datas.length; i++) {
-                        data.dependImgs.put(layer.imgs.datas[i],FileUtil.getImagePathByName(layer.imgs.datas[i]));
+                        data.dependImgs.put(layer.imgs.datas[i], FileUtil.getImagePathByName(layer.imgs.datas[i]));
                     }
                 }
-                if(layer.paintParam!=null&&layer.paintParam.shaderParam!=null&&layer.paintParam.shaderParam.bitmapParam!=null){
-                    if(!TextUtils.isEmpty(layer.paintParam.shaderParam.bitmapParam.img)){
-                        data.dependImgs.put(layer.paintParam.shaderParam.bitmapParam.img,FileUtil.getImagePathByName(layer.paintParam.shaderParam.bitmapParam.img));
+                if (layer.paintParam != null && layer.paintParam.shaderParam != null && layer.paintParam.shaderParam.bitmapParam != null) {
+                    if (!TextUtils.isEmpty(layer.paintParam.shaderParam.bitmapParam.img)) {
+                        data.dependImgs.put(layer.paintParam.shaderParam.bitmapParam.img, FileUtil.getImagePathByName(layer.paintParam.shaderParam.bitmapParam.img));
                     }
                 }
             }
@@ -537,12 +544,11 @@ public class EditActivity extends Activity{
     }
 
 
-
-    private class MyAdapter extends BaseAdapter{
+    private class MyAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return drawData.layers==null?0:drawData.layers.size();
+            return drawData.layers == null ? 0 : drawData.layers.size();
         }
 
         @Override
@@ -558,16 +564,16 @@ public class EditActivity extends Activity{
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
-            if(convertView == null){
-                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layer,parent,false);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layer, parent, false);
                 holder = new ViewHolder();
                 holder.tv = (TextView) convertView.findViewById(R.id.tv_layer);
                 convertView.setTag(holder);
-            }else {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             LayerData layer = getItem(position);
-            if(layer.name!=null){
+            if (layer.name != null) {
                 holder.tv.setText(layer.name);
             }
 //            switch (layer.type){
@@ -585,10 +591,9 @@ public class EditActivity extends Activity{
         }
     }
 
-    private class  ViewHolder{
+    private class ViewHolder {
         TextView tv;
     }
-
 
 
 }

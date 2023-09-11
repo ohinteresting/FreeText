@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/FreeText.iml" filepath="$PROJECT_DIR$/.idea/FreeText.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FreeText.iml" filepath="$PROJECT_DIR$/.idea/modules/FreeText.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FreeText.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FreeText.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FreeText.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FreeText.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FreeText.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FreeText.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FreeText.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FreeText.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.iml" filepath="$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.main.iml" filepath="$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/freefont/FreeText.freefont.unitTest.iml" />
     </modules>
   </component>
 </project>
